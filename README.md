@@ -1,6 +1,6 @@
 # tr-Vue-Shop
 
 ## Description
-Mise en application du tuto FromScratch : 
-[Projet Vue JS] Créer une interface utilisateur avec Vuejs
-https://www.youtube.com/watch?v=siy9ETx68NU
+Mise en application du tuto  La Tech avec Bertrand : 
+[TUTO] Vue JS : les bases en 35 minutes !
+https://www.youtube.com/watch?v=D3oivlcoEvw&t=3s
