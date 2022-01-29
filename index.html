@@ -1,0 +1,118 @@
+<!-- https://www.youtube.com/watch?v=D3oivlcoEvw&list=PL04hTNILO2hktvv9TZjLI6Prh3ziUo4QE&index=11 -->
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="stylesheet" href="bootstrap.css" />
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+        <title>Tuto - Vue js</title>
+    </head>
+    <body>
+        <div id="app">
+            <div class="container">
+                <div class="row">
+                    <p class="jumbotron">
+                        Login :
+                        <input type="text" v-model="user" /> | Vous êtes
+                        connecté en tant que {{ user }}
+                    </p>
+                </div>
+            </div>
+
+            <h1 class="display-4" v-if="commandes.length > 0">
+                Produits commandés
+            </h1>
+            <!-- <ul>
+                <li v-for="commande in commandes">{{ commande }}</li>
+            </ul> -->
+
+            <div class="row">
+                <fiche-produit
+                    v-for="commande in commandes"
+                    v-bind:nom="commande"
+                    role="recap"
+                >
+                </fiche-produit>
+            </div>
+
+            <h1 v-bind:class="affichage">Produits disponibles</h1>
+            <div class="row">
+                <fiche-produit
+                    v-for="produit in produits"
+                    v-bind:nom="produit"
+                    v-on:commande-passee="commander"
+                    role="commande"
+                ></fiche-produit>
+
+                <!-- Sans composants -->
+                <!-- <div
+                    class="col-2"
+                    v-for="produit in produits"
+                    v-bind:nom="produit"
+                >
+                    <p class="jumbotron">
+                        {{ produit }}
+                        <br />
+                        <button v-on:click="commander(produit)">
+                            Commander
+                        </button>
+                    </p>
+                </div> -->
+            </div>
+        </div>
+
+        <script>
+            // 1-  Rendu déclaratif {{ foo }}: Passer des informations depuis la balise script vers l'interface HTML
+            // 2-  DATA-BINDING : Passer des informations depuis l'interface HTML vers la balise script (v-model)
+            // 3-  La directive v-for
+            // 4-  Les méthodes : la directive v-on:click
+            // 5-  Passage de parametres :commander(produit)
+            // 6-  Afficher la liste
+            // 7-  La directive v-if
+            // 8-  La directive v-bind : modifier des attributs html/css (classes...)
+            // 9-  Les composants : component()
+            // 10- Les propriétés d'un composant: props
+            // 11- Emmettre un événement vers le composant parent : écouteurs d'événement personalisés passerCommande : v-on:click
+
+            Vue.component("fiche-produit", {
+                template: `
+                <div class="col-3">
+                    <p class="jumbotron">{{ nom }} <br>
+                    <button v-on:click="passer_commande(nom)" v-if="role=='commande'">
+                            Commander
+                        </button></p>
+                </div>
+                `,
+
+                props: ["nom", "role"],
+                methods: {
+                    passer_commande: function (produit) {
+                        this.$emit("commande-passee", produit);
+                    },
+                },
+            });
+
+            var app = new Vue({
+                el: "#app",
+                data: {
+                    user: "9¥0M",
+                    produits: ["Pizza", "Humburger", "Cheeseburger", "Tacos"],
+                    commandes: [],
+                    affichage: "display-4",
+                },
+                methods: {
+                    commander: function (produit) {
+                        console.log(produit);
+                        this.commandes.push(produit);
+                    },
+                },
+            });
+        </script>
+
+        <!-- <script src="app.js"></script> -->
+    </body>
+</html>
